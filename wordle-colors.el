@@ -34,12 +34,12 @@
 
 (defface wordle-colors-yellow
   '((t (:background "#c8b653" :foregroud "#ffffff")))
-  "Wordle yellow"
+  "Wordle yellow."
   :group 'wordle-colors)
 
 (defface wordle-colors-gray
   '((t :background "#787c7f" :foreground "#ffffff"))
-  "Wordle gray"
+  "Wordle gray."
   :group 'wordle-colors)
 
 (defun wordle-colors--in-wordle-block-p ()
@@ -61,6 +61,11 @@ When ELEMENT is provided, it is considered to be element at point."
    return nil))
 
 (defun wordle-colors--search (&optional bound backward)
+  "Search for a Wordle cell.
+
+BOUND is where to start the search.
+
+BACKWARD is incase we need to search backwards (based on `hl-todo-mode')."
   (let ((regexp (rx (group-n 2 (any "+/*")) (group-n 1 alpha) (backref 2))))
     (cl-block nil
       (while (funcall (if backward #'re-search-backward #'re-search-forward) regexp bound t)
@@ -71,6 +76,7 @@ When ELEMENT is provided, it is considered to be element at point."
           (cl-return nil)))))))
 
 (defun wordle-colors--get-face ()
+  "Get the face for the current Wordle cell."
   (pcase (match-string 2)
     ("/" 'wordle-colors-yellow)
     ("*" 'wordle-colors-green)
@@ -78,7 +84,8 @@ When ELEMENT is provided, it is considered to be element at point."
 
 (defvar wordle-colors--keywords
   `((,(lambda (bound) (wordle-colors--search bound))
-     (0 (wordle-colors--get-face) prepend t))))
+     (0 (wordle-colors--get-face) prepend t)))
+  "Wordle Colors font-lock keywords.")
 
 (define-minor-mode wordle-colors-mode
   "Highlight [!IMPORTANT] and similar keywords in quote blocks."
