@@ -33,7 +33,7 @@
   :group 'wordle-colors)
 
 (defface wordle-colors-yellow
-  '((t (:background "#c8b653" :foregroud "#ffffff")))
+  '((t (:background "#c8b653" :foreground "#ffffff")))
   "Wordle yellow."
   :group 'wordle-colors)
 
