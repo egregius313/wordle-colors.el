@@ -5,8 +5,8 @@
 ;; Author: Edward Minnix III <egregius313@gmail.com>
 ;; Maintainer: Edward Minnix III <egregius313@gmail.com>
 ;; Created: October 30, 2025
-;; Modified: October 30, 2025
-;; Version: 0.0.1
+;; Modified: August 20, 2026
+;; Version: 0.0.2
 ;; Keywords: faces games
 ;; Homepage: https://github.com/egregius313/wordle-colors
 ;; Package-Requires: ((emacs "30.1"))
@@ -71,6 +71,7 @@ BACKWARD is incase we need to search backwards (based on `hl-todo-mode')."
       (while (funcall (if backward #'re-search-backward #'re-search-forward) regexp bound t)
         (cond
          ((wordle-colors--in-wordle-block-p)
+          (goto-char (match-beginning 0))
           (cl-return t))
          ((and bound (funcall (if backward #'<= #'>=) (point) bound))
           (cl-return nil)))))))
